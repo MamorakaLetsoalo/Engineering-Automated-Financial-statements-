@@ -1,0 +1,132 @@
+{
+  "_comment": "Import this file in Databricks Workflows → Create Job → JSON. Update cluster_id and base_path to match your environment.",
+
+  "name": "FinModel Pro — Monthly Pipeline",
+  "schedule": {
+    "quartz_cron_expression": "0 0 6 1 * ?",
+    "timezone_id": "Africa/Johannesburg",
+    "pause_status": "UNPAUSED"
+  },
+  "email_notifications": {
+    "on_failure": ["your-email@company.com"],
+    "no_alert_for_skipped_runs": true
+  },
+  "timeout_seconds": 7200,
+  "max_concurrent_runs": 1,
+
+  "tasks": [
+    {
+      "task_key": "01_ingest_financials",
+      "description": "Ingest synthetic company financial data to Bronze Delta",
+      "notebook_task": {
+        "notebook_path": "/Repos/your-username/finmodel-pro/databricks/notebooks/ingestion/ingest_financials",
+        "base_parameters": {
+          "run_id": "{{job.run_id}}"
+        }
+      },
+      "existing_cluster_id": "YOUR_CLUSTER_ID",
+      "timeout_seconds": 600,
+      "max_retries": 2,
+      "retry_on_timeout": true
+    },
+    {
+      "task_key": "02_ingest_macro",
+      "description": "Ingest macro indicators (World Bank / FRED / synthetic)",
+      "depends_on": [],
+      "notebook_task": {
+        "notebook_path": "/Repos/your-username/finmodel-pro/databricks/notebooks/ingestion/ingest_macro",
+        "base_parameters": {
+          "run_id": "{{job.run_id}}"
+        }
+      },
+      "existing_cluster_id": "YOUR_CLUSTER_ID",
+      "timeout_seconds": 600,
+      "max_retries": 3,
+      "retry_on_timeout": true
+    },
+    {
+      "task_key": "03_dq_validation",
+      "description": "Run 7-check DQ framework — schema, nulls, duplicates, ranges, business rules",
+      "depends_on": [
+        {"task_key": "01_ingest_financials"},
+        {"task_key": "02_ingest_macro"}
+      ],
+      "notebook_task": {
+        "notebook_path": "/Repos/your-username/finmodel-pro/databricks/notebooks/quality/dq_framework",
+        "base_parameters": {
+          "run_id": "{{job.run_id}}"
+        }
+      },
+      "existing_cluster_id": "YOUR_CLUSTER_ID",
+      "timeout_seconds": 900,
+      "max_retries": 1
+    },
+    {
+      "task_key": "04_silver_transforms",
+      "description": "Bronze → Silver: clean, enrich with 35+ KPIs, join macro",
+      "depends_on": [
+        {"task_key": "03_dq_validation"}
+      ],
+      "notebook_task": {
+        "notebook_path": "/Repos/your-username/finmodel-pro/databricks/notebooks/processing/silver_transforms",
+        "base_parameters": {
+          "run_id": "{{job.run_id}}"
+        }
+      },
+      "existing_cluster_id": "YOUR_CLUSTER_ID",
+      "timeout_seconds": 1200,
+      "max_retries": 2
+    },
+    {
+      "task_key": "05_forecasting",
+      "description": "Prophet revenue forecast + driver-based costs + scenario engine",
+      "depends_on": [
+        {"task_key": "04_silver_transforms"}
+      ],
+      "notebook_task": {
+        "notebook_path": "/Repos/your-username/finmodel-pro/databricks/notebooks/forecasting/forecasting_engine",
+        "base_parameters": {
+          "run_id": "{{job.run_id}}"
+        }
+      },
+      "existing_cluster_id": "YOUR_CLUSTER_ID",
+      "timeout_seconds": 1800,
+      "max_retries": 2
+    },
+    {
+      "task_key": "06_financial_statements",
+      "description": "Generate 3-statement model (IS, BS, CF) + validation",
+      "depends_on": [
+        {"task_key": "05_forecasting"}
+      ],
+      "notebook_task": {
+        "notebook_path": "/Repos/your-username/finmodel-pro/databricks/notebooks/statements/financial_statements",
+        "base_parameters": {
+          "run_id": "{{job.run_id}}"
+        }
+      },
+      "existing_cluster_id": "YOUR_CLUSTER_ID",
+      "timeout_seconds": 900,
+      "max_retries": 2
+    },
+    {
+      "task_key": "07_export",
+      "description": "Export CSVs + formatted Excel workbook",
+      "depends_on": [
+        {"task_key": "06_financial_statements"}
+      ],
+      "notebook_task": {
+        "notebook_path": "/Repos/your-username/finmodel-pro/databricks/notebooks/statements/export_layer",
+        "base_parameters": {
+          "run_id": "{{job.run_id}}"
+        }
+      },
+      "existing_cluster_id": "YOUR_CLUSTER_ID",
+      "timeout_seconds": 600,
+      "max_retries": 3,
+      "retry_on_timeout": true
+    }
+  ],
+
+  "format": "MULTI_TASK"
+}
