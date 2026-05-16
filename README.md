@@ -110,7 +110,7 @@ finmodel_pro/
 - [x] Pipeline utilities (logger, DeltaWriter, retry, checkpoint)
 - [x] Data ingestion (financials + macro, Bronze layer)
 
-### Phase 2 — Data Quality (Week 1–2)
+### Phase 2 — Data Quality 
 - [x] Schema validation
 - [x] Null checks (hard + soft)
 - [x] Duplicate detection
@@ -121,7 +121,7 @@ finmodel_pro/
 - [x] Quarantine table
 - [x] DQ audit log
 
-### Phase 3 — Processing & Forecasting (Week 2)
+### Phase 3 — Processing & Forecasting 
 - [x] Silver transforms (35+ KPIs, macro join, partitioned)
 - [x] Prophet revenue forecasting with macro regressors
 - [x] Driver-based cost forecasting (margin regression)
@@ -129,27 +129,27 @@ finmodel_pro/
 - [x] Cash flow derivation
 - [x] Scenario engine (Base / Bull / Bear)
 
-### Phase 4 — Financial Statements (Week 2–3)
+### Phase 4 — Financial Statements 
 - [x] Income Statement (historical + forecast)
 - [x] Balance Sheet (with Assets = L + E validation)
 - [x] Cash Flow Statement (indirect method)
 - [x] 3-statement linkage validation
 - [x] Excel export (4-tab model, formatted)
 
-### Phase 5 — Orchestration (Week 3)
+### Phase 5 — Orchestration 
 - [x] Master pipeline DAG
 - [x] Stage dependency management
 - [x] Retry with exponential backoff
 - [x] Checkpoint recovery (skip completed stages)
 - [x] Run logging + pipeline summary
 
-### Phase 6 — Serving Layer (Week 3–4)
+### Phase 6 — Serving Layer
 - [x] Streamlit app (6 tabs: overview, 3 statements, DCF, scenarios)
 - [x] DCF valuation with WACC × terminal growth sensitivity heatmap
 - [x] Scenario comparison engine with live shocks
 - [ ] Power BI report template (manual: connect to CSV exports)
 
-### Phase 7 — Observability & Docs (Week 4)
+### Phase 7 — Observability & Docs 
 - [x] Audit log (every pipeline event)
 - [x] DQ log (every check, queryable)
 - [x] Run log (stage durations, row counts)
@@ -159,30 +159,7 @@ finmodel_pro/
 
 ---
 
-## Quick Start
 
-```bash
-# 1. Clone repo
-git clone https://github.com/your-username/finmodel-pro
-
-# 2. Upload databricks/ folder to Databricks Workspace
-
-# 3. Install cluster libraries:
-#    prophet, fredapi, openpyxl, scikit-learn, faker
-
-# 4. Run master pipeline:
-#    Databricks → open master_pipeline.py → Run All
-
-# 5. Download CSVs from /FileStore/finmodel_pro/exports/
-#    Copy to ./exports/ folder
-
-# 6. Run Streamlit app:
-pip install streamlit plotly pandas numpy
-cd streamlit_app
-streamlit run app.py
-```
-
----
 
 ## Key Design Decisions
 
