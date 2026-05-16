@@ -355,21 +355,33 @@ PLOT_LAYOUT = dict(
     paper_bgcolor=COLORS["bg"],
     plot_bgcolor=COLORS["bg2"],
     font=dict(family="IBM Plex Sans", color=COLORS["text"], size=12),
-    xaxis=dict(gridcolor=COLORS["border"], linecolor=COLORS["border"],
-               tickcolor=COLORS["green"], tickfont=dict(color=COLORS["green"]), titlefont=dict(color=COLORS["green"]), showgrid=True),
-    yaxis=dict(gridcolor=COLORS["border"], linecolor=COLORS["border"],
-               tickcolor=COLORS["green"], tickfont=dict(color=COLORS["green"]), titlefont=dict(color=COLORS["green"]), showgrid=True),
+    xaxis=dict(
+        gridcolor=COLORS["border"],
+        linecolor=COLORS["border"],
+        tickcolor=COLORS["green"],
+        tickfont=dict(color=COLORS["green"]),
+        title=dict(font=dict(color=COLORS["green"])),
+        showgrid=True,
+    ),
+    yaxis=dict(
+        gridcolor=COLORS["border"],
+        linecolor=COLORS["border"],
+        tickcolor=COLORS["green"],
+        tickfont=dict(color=COLORS["green"]),
+        title=dict(font=dict(color=COLORS["green"])),
+        showgrid=True,
+    ),
     legend=dict(bgcolor=COLORS["bg2"], bordercolor=COLORS["border"],
                 borderwidth=1, font=dict(color=COLORS["green"]), orientation="h", yanchor="top", y=-0.15, xanchor="center", x=0.5),
     margin=dict(l=0, r=0, t=50, b=70),
     hovermode="x unified",
     title_x=0.0,
     title_xanchor="left",
-    title_font=dict(size=14, color=COLORS["green"], family="IBM Plex Sans"),
 )
 
 def apply_layout(fig, **kwargs):
-    fig.update_layout(**PLOT_LAYOUT, **kwargs)
+    fig.update_layout(**PLOT_LAYOUT)
+    fig.update_layout(**kwargs)
     # Add rounded corners styling with shapes
     fig.update_xaxes(showline=True, linewidth=1, linecolor=COLORS["border"], mirror=False)
     fig.update_yaxes(showline=True, linewidth=1, linecolor=COLORS["border"], mirror=False)
@@ -636,7 +648,7 @@ if selected_tab == "📈 Overview":
                 name="ARPU", mode="lines+markers",
                 line=dict(color=COLORS["yellow"], width=2),
             ), secondary_y=True)
-            fig4.update_layout(**PLOT_LAYOUT, title="Customers & ARPU", height=240)
+            apply_layout(fig4, title="Customers & ARPU", height=240)
             st.plotly_chart(fig4, width='stretch')
 
     with col_c:
@@ -815,8 +827,8 @@ elif selected_tab == "🏦 Balance Sheet":
         go.Bar(name="Inventory",  x=[str(y) for y in bs_years_all], y=inv,      marker_color=COLORS["purple"]),
         go.Bar(name="Net PP&E",   x=[str(y) for y in bs_years_all], y=ppe,      marker_color=COLORS["yellow"]),
     ])
-    fig_bs.update_layout(**PLOT_LAYOUT, barmode="stack", title="Asset Composition",
-                          yaxis_tickprefix="R ", yaxis_tickformat=",.0f", height=300)
+    apply_layout(fig_bs, barmode="stack", title="Asset Composition",
+                 yaxis_tickprefix="R ", yaxis_tickformat=",.0f", height=300)
     st.plotly_chart(fig_bs, width='stretch')
 
 # ══════════════════════════════════════════════════════════════════════════════
