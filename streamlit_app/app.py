@@ -29,10 +29,14 @@ st.markdown("""
 
   html, body, [class*="css"] {
     font-family: 'IBM Plex Sans', sans-serif;
-    background: #d4d4d4;
-    color: #000000;
+    background: #d4d4d4 !important;
+    color: #000000 !important;
   }
-  .main { background: #d4d4d4; }
+  .main, .mainContent { background: #d4d4d4 !important; }
+  
+  /* Override Streamlit defaults */
+  [class*="Container"] { background: #d4d4d4 !important; }
+  [class*="Block"] { background: #d4d4d4 !important; }
 
   /* KPI cards */
   .kpi-card {
@@ -146,6 +150,17 @@ st.markdown("""
   .stTextInput > div > div > input,
   .stNumberInput > div > div > input,
   .stSlider > div > div { color: #000000; }
+  
+  /* Plotly chart container styling */
+  [data-testid="stPlotlyChart"] {
+    border-radius: 16px !important;
+    overflow: hidden !important;
+  }
+  
+  .plotly-graph-div {
+    border-radius: 16px !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+  }
   
   /* Divider */
   hr { border-color: #c0c0c0; }
@@ -344,12 +359,16 @@ PLOT_LAYOUT = dict(
                tickcolor=COLORS["text"]),
     legend=dict(bgcolor=COLORS["bg2"], bordercolor=COLORS["border"],
                 borderwidth=1),
-    margin=dict(l=0, r=0, t=32, b=0),
+    margin=dict(l=0, r=0, t=48, b=0),
     hovermode="x unified",
+    title=dict(x=0.5, xanchor="center", font=dict(size=14, color=COLORS["text"], family="IBM Plex Sans")),
 )
 
 def apply_layout(fig, **kwargs):
     fig.update_layout(**PLOT_LAYOUT, **kwargs)
+    # Add rounded corners styling with shapes
+    fig.update_xaxes(showline=True, linewidth=1, linecolor=COLORS["border"], mirror=False)
+    fig.update_yaxes(showline=True, linewidth=1, linecolor=COLORS["border"], mirror=False)
     return fig
 
 
