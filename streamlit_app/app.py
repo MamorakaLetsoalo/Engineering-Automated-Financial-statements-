@@ -356,16 +356,16 @@ PLOT_LAYOUT = dict(
     plot_bgcolor=COLORS["bg2"],
     font=dict(family="IBM Plex Sans", color=COLORS["text"], size=12),
     xaxis=dict(gridcolor=COLORS["border"], linecolor=COLORS["border"],
-               tickcolor=COLORS["text"], showgrid=True),
+               tickcolor=COLORS["green"], tickfont=dict(color=COLORS["green"]), titlefont=dict(color=COLORS["green"]), showgrid=True),
     yaxis=dict(gridcolor=COLORS["border"], linecolor=COLORS["border"],
-               tickcolor=COLORS["text"], showgrid=True),
+               tickcolor=COLORS["green"], tickfont=dict(color=COLORS["green"]), titlefont=dict(color=COLORS["green"]), showgrid=True),
     legend=dict(bgcolor=COLORS["bg2"], bordercolor=COLORS["border"],
-                borderwidth=1, font=dict(color="#000000"), orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
-    margin=dict(l=0, r=0, t=50, b=0),
+                borderwidth=1, font=dict(color=COLORS["green"]), orientation="h", yanchor="top", y=-0.15, xanchor="center", x=0.5),
+    margin=dict(l=0, r=0, t=50, b=70),
     hovermode="x unified",
     title_x=0.0,
     title_xanchor="left",
-    title_font=dict(size=14, color=COLORS["text"], family="IBM Plex Sans"),
+    title_font=dict(size=14, color=COLORS["green"], family="IBM Plex Sans"),
 )
 
 def apply_layout(fig, **kwargs):
@@ -427,7 +427,7 @@ combined = pd.concat([
     fcast.assign(period_type="Forecast"),
 ], ignore_index=True).sort_values("year")
 
-company_name = hist["company"].iloc[0] if "company" in hist.columns else "ML Corp"
+company_name = "ML Corp"
 
 # ── Sidebar ───────────────────────────────────────────────────────────────────
 nav_options = [
