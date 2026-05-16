@@ -377,11 +377,14 @@ PLOT_LAYOUT = dict(
     hovermode="x unified",
     title_x=0.0,
     title_xanchor="left",
+    title=dict(font=dict(color=COLORS["green"])),
 )
 
 def apply_layout(fig, **kwargs):
     fig.update_layout(**PLOT_LAYOUT)
     fig.update_layout(**kwargs)
+    if "title" in kwargs and isinstance(kwargs["title"], str):
+        fig.update_layout(title=dict(text=kwargs["title"], font=dict(color=COLORS["green"])))
     # Add rounded corners styling with shapes
     fig.update_xaxes(showline=True, linewidth=1, linecolor=COLORS["border"], mirror=False)
     fig.update_yaxes(showline=True, linewidth=1, linecolor=COLORS["border"], mirror=False)
