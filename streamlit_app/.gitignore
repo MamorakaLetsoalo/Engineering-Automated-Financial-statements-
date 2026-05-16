@@ -1,0 +1,10 @@
+# Streamlit-specific ignores
+.streamlit/
+.streamlit/cache/
+
+# keep same project-level ignores for IDE and envs as needed
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+.vscode/
