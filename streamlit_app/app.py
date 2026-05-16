@@ -29,22 +29,24 @@ st.markdown("""
 
   html, body, [class*="css"] {
     font-family: 'IBM Plex Sans', sans-serif;
+    background: #ffffff;
+    color: #111827;
   }
-  .main { background: #0d1117; }
+  .main { background: #ffffff; }
 
   /* KPI cards */
   .kpi-card {
-    background: linear-gradient(135deg, #161b22 0%, #21262d 100%);
-    border: 1px solid #30363d;
-    border-radius: 8px;
+    background: #f8fafc;
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
     padding: 20px 24px;
     margin-bottom: 12px;
   }
   .kpi-label {
     font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    color: #8b949e;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    color: #475569;
     text-transform: uppercase;
     margin-bottom: 6px;
   }
@@ -52,20 +54,20 @@ st.markdown("""
     font-family: 'IBM Plex Mono', monospace;
     font-size: 26px;
     font-weight: 600;
-    color: #e6edf3;
+    color: #111827;
     line-height: 1;
   }
-  .kpi-delta-pos { color: #3fb950; font-size: 13px; margin-top: 4px; }
-  .kpi-delta-neg { color: #f85149; font-size: 13px; margin-top: 4px; }
+  .kpi-delta-pos { color: #0f766e; font-size: 13px; margin-top: 4px; }
+  .kpi-delta-neg { color: #b91c1c; font-size: 13px; margin-top: 4px; }
 
   /* Section headers */
   .section-header {
     font-size: 13px;
     font-weight: 700;
     letter-spacing: 0.08em;
-    color: #58a6ff;
+    color: #334155;
     text-transform: uppercase;
-    border-bottom: 1px solid #21262d;
+    border-bottom: 1px solid #e2e8f0;
     padding-bottom: 8px;
     margin: 24px 0 16px 0;
   }
@@ -73,70 +75,71 @@ st.markdown("""
   /* Statement table */
   .fin-table { width: 100%; border-collapse: collapse; font-size: 13px; }
   .fin-table th {
-    background: #161b22;
-    color: #8b949e;
-    font-weight: 600;
+    background: #f8fafc;
+    color: #334155;
+    font-weight: 700;
     font-size: 11px;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     padding: 10px 14px;
     text-align: right;
-    border-bottom: 1px solid #30363d;
+    border-bottom: 1px solid #e2e8f0;
   }
   .fin-table th:first-child { text-align: left; }
   .fin-table td {
-    padding: 8px 14px;
+    padding: 10px 14px;
     font-family: 'IBM Plex Mono', monospace;
     font-size: 12px;
-    color: #c9d1d9;
+    color: #1f2937;
     text-align: right;
-    border-bottom: 1px solid #161b22;
+    border-bottom: 1px solid #e2e8f0;
   }
   .fin-table td:first-child {
     font-family: 'IBM Plex Sans', sans-serif;
     font-size: 13px;
     text-align: left;
-    color: #e6edf3;
+    color: #111827;
     padding-left: 8px;
   }
   .fin-table tr.total-row td {
     font-weight: 700;
-    color: #e6edf3;
-    background: #161b22;
-    border-top: 1px solid #30363d;
+    color: #111827;
+    background: #f1f5f9;
+    border-top: 1px solid #d1d5db;
   }
   .fin-table tr.section-row td {
     font-weight: 700;
-    color: #58a6ff;
-    background: #0d1117;
+    color: #334155;
+    background: #f8fafc;
     font-size: 11px;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     padding-top: 16px;
   }
-  .fin-table tr.forecast-col { background: rgba(255, 214, 0, 0.04); }
-  .positive { color: #3fb950 !important; }
-  .negative { color: #f85149 !important; }
+  .fin-table tr.forecast-col { background: rgba(148, 163, 184, 0.08); }
+  .positive { color: #0f766e !important; }
+  .negative { color: #b91c1c !important; }
 
   /* Sidebar */
   [data-testid="stSidebar"] {
-    background: #0d1117;
-    border-right: 1px solid #21262d;
+    background: #f8fafc;
+    border-right: 1px solid #e2e8f0;
   }
 
   /* Metric overrides */
   [data-testid="metric-container"] {
-    background: #161b22;
-    border: 1px solid #30363d;
-    border-radius: 8px;
-    padding: 12px 16px;
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    padding: 16px 18px;
   }
-  div[data-testid="metric-container"] label { color: #8b949e !important; }
+  div[data-testid="metric-container"] label { color: #475569 !important; }
 
   .stTabs [data-baseweb="tab"] {
     font-size: 13px;
     font-weight: 600;
     letter-spacing: 0.04em;
+    color: #334155;
   }
 </style>
 """, unsafe_allow_html=True)
@@ -163,14 +166,11 @@ def load_data():
     fcast = try_csv("annual_forecast")
     scenarios = try_csv("scenarios")
     monthly = try_csv("monthly_forecast")
-    exports_found = all([hist is not None, fcast is not None, scenarios is not None, monthly is not None])
 
-    if exports_found:
-        st.success("✅ Loaded exported CSV data from ./exports/")
-    else:
+    if hist is None or fcast is None or scenarios is None or monthly is None:
         # ── Synthetic fallback (runs without Databricks) ──────────────────
         st.info("📂 No exported CSVs found — running with synthetic demo data. "
-                "Run the Databricks notebooks first, then export CSVs to ./exports/")
+                "Run the Databricks notebooks first, then copy CSVs to ./exports/")
         hist, fcast, scenarios, monthly = _generate_synthetic()
 
     return hist, fcast, scenarios, monthly
@@ -309,17 +309,17 @@ def color_val(v, fmt_fn=fmt_r):
     return f'<span class="{cls}">{txt}</span>'
 
 COLORS = {
-    "blue"   : "#58a6ff",
-    "green"  : "#3fb950",
-    "red"    : "#f85149",
-    "yellow" : "#d29922",
-    "purple" : "#bc8cff",
-    "teal"   : "#39d353",
-    "bg"     : "#0d1117",
-    "bg2"    : "#161b22",
-    "border" : "#30363d",
-    "text"   : "#e6edf3",
-    "muted"  : "#8b949e",
+    "blue"   : "#2563eb",
+    "green"  : "#0f766e",
+    "red"    : "#b91c1c",
+    "yellow" : "#f59e0b",
+    "purple" : "#7c3aed",
+    "teal"   : "#2dd4bf",
+    "bg"     : "#ffffff",
+    "bg2"    : "#f8fafc",
+    "border" : "#e5e7eb",
+    "text"   : "#111827",
+    "muted"  : "#475569",
 }
 
 PLOT_LAYOUT = dict(
@@ -392,7 +392,7 @@ combined = pd.concat([
     fcast.assign(period_type="Forecast"),
 ], ignore_index=True).sort_values("year")
 
-company_name = hist["company"].iloc[0] if "company" in hist.columns else "AcmeCorp"
+company_name = hist["company"].iloc[0] if "company" in hist.columns else "ML Corp"
 
 # ── Sidebar ───────────────────────────────────────────────────────────────────
 with st.sidebar:
@@ -400,25 +400,27 @@ with st.sidebar:
     st.markdown(f"**{company_name}**")
     st.divider()
 
-    st.markdown("#### 🎛️ Scenario")
-    scenario = st.selectbox("Active Scenario", ["Base", "Bull", "Bear"], index=0)
+    st.markdown("#### � Scenario analysis")
+    st.markdown("Choose the forecast view that highlights strategic upside and downside outcomes.")
+    scenario = st.selectbox("Forecast scenario", ["Base", "Bull", "Bear"], index=0)
     sc_data = scenarios[scenarios["scenario"] == scenario].sort_values("year")
 
     st.divider()
-    st.markdown("#### 🏦 DCF Assumptions")
-    wacc           = st.slider("WACC (%)",           5.0, 25.0, 12.0, 0.5) / 100
-    terminal_g     = st.slider("Terminal Growth (%)", 0.5,  6.0,  2.5, 0.5) / 100
-    net_debt_m     = st.number_input("Net Debt (R millions)", value=5.0, step=0.5)
+    st.markdown("#### 🧮 Valuation assumptions")
+    wacc           = st.slider("Discount rate (WACC %)",           5.0, 25.0, 12.0, 0.5) / 100
+    terminal_g     = st.slider("Terminal growth (%)", 0.5,  6.0,  2.5, 0.5) / 100
+    net_debt_m     = st.number_input("Net Debt (R million)", value=5.0, step=0.5)
     net_debt       = net_debt_m * 1_000_000
-    shares_m       = st.number_input("Shares Outstanding (millions)", value=10.0, step=1.0)
+    shares_m       = st.number_input("Shares outstanding (million)", value=10.0, step=1.0)
 
     st.divider()
-    st.markdown("#### 📉 Macro Sensitivity")
-    rev_shock      = st.slider("Revenue Shock (%)", -30, +30, 0, 5) / 100
-    margin_shock   = st.slider("Margin Shock (pp)", -10, +10, 0, 1) / 100
+    st.markdown("#### 🌍 Macro sensitivity")
+    st.markdown("Stress test revenue and margin assumptions for a sharper view of downside risk.")
+    rev_shock      = st.slider("Revenue impact (%)", -30, +30, 0, 5) / 100
+    margin_shock   = st.slider("Margin shift (pp)", -10, +10, 0, 1) / 100
 
     st.divider()
-    st.caption("Phase 1 notebooks → Databricks  \nPhase 2 UI → Streamlit")
+    st.caption("Built for fast forecast validation, scenario modeling, and investor-ready insight.")
 
 # ── Apply shocks to scenario ──────────────────────────────────────────────────
 sc_adj = sc_data.copy()
@@ -430,13 +432,18 @@ if rev_shock != 0 or margin_shock != 0:
 
 # ── Header ────────────────────────────────────────────────────────────────────
 st.markdown(f"""
-<div style="display:flex; align-items:center; gap:16px; margin-bottom:24px;">
-  <div style="font-size:28px; font-weight:700; color:#e6edf3;">{company_name}</div>
-  <div style="background:#21262d; border:1px solid #30363d; border-radius:20px;
-       padding:4px 14px; font-size:12px; font-weight:600; color:#58a6ff;">
-    {scenario} Scenario
+<div style="display:flex; flex-direction:column; gap:10px; margin-bottom:24px;">
+  <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+    <div style="font-size:32px; font-weight:700; color:#111827;">{company_name}</div>
+    <div style="background:#e5e7eb; border:1px solid #d1d5db; border-radius:20px;
+         padding:6px 16px; font-size:13px; font-weight:600; color:#374151;">
+      {scenario} Scenario
+    </div>
+    {"<div style='background:#f8fafc;border-radius:20px;padding:6px 16px;font-size:13px;font-weight:600;color:#111827;border:1px solid #d1d5db;'>⚡ Shocked</div>" if (rev_shock != 0 or margin_shock != 0) else ""}
   </div>
-  {"<div style='background:#d29922;border-radius:20px;padding:4px 14px;font-size:12px;font-weight:600;color:#0d1117;'>⚡ Shocked</div>" if (rev_shock != 0 or margin_shock != 0) else ""}
+  <div style="color:#4b5563; font-size:16px; max-width:820px; line-height:1.5;">
+    Business finance simplified: compare historical performance, scenario-driven forecasts, and valuation sensitivity in one clean, neutral dashboard.
+  </div>
 </div>
 """, unsafe_allow_html=True)
 
