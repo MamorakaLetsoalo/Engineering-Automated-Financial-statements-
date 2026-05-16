@@ -90,6 +90,17 @@ Raw Data → Bronze → DQ Gate → Silver → Gold → Forecasts → 3-Statemen
 | **Full Lineage** | Every metric, every table, every business rule documented in the data catalog |
 | **$0 Infrastructure** | Databricks free tier + open-source stack — no cloud spend required |
 
+
+## Link to streamlit app: https://mgnx7ko8kuahh9qt2zf4ur.streamlit.app/
+
+
+
+<img width="1835" height="908" alt="image" src="https://github.com/user-attachments/assets/efb451f7-591d-4c1c-8e33-7be125be0ed3" />
+
+<img width="1837" height="897" alt="image" src="https://github.com/user-attachments/assets/f9247b80-c185-414e-ad45-c82018aa1881" />
+
+<img width="1830" height="880" alt="image" src="https://github.com/user-attachments/assets/57ae8881-9fcd-4abc-9b29-4bac2b33e830" />
+
 ---
 
 ## Project Structure
