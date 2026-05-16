@@ -25,149 +25,145 @@ st.set_page_config(
 # ── Custom CSS ────────────────────────────────────────────────────────────────
 st.markdown("""
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 
   html, body, [class*="css"] {
-    font-family: 'IBM Plex Sans', sans-serif;
-    background: #d4d4d4 !important;
+    font-family: 'Inter', sans-serif;
+    background: #F5F0E8 !important;
     color: #000000 !important;
   }
-  .main, .mainContent { background: #d4d4d4 !important; }
-  
-  /* Override Streamlit defaults */
-  [class*="Container"] { background: #d4d4d4 !important; }
-  [class*="Block"] { background: #d4d4d4 !important; }
-
-  /* KPI cards */
-  .kpi-card {
-    background: #e8e8e8;
-    border: 1px solid #c0c0c0;
-    border-radius: 12px;
-    padding: 20px 24px;
-    margin-bottom: 12px;
+  .main, .mainContent, .block-container, [data-testid="stAppViewContainer"] {
+    background: #F5F0E8 !important;
   }
-  .kpi-label {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    color: #000000;
-    text-transform: uppercase;
-    margin-bottom: 6px;
+  .css-1v3fvcr, .css-18e3th9, .css-1d391kg, .css-1lcbmhc {
+    background: #F5F0E8 !important;
   }
-  .kpi-value {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 26px;
-    font-weight: 600;
-    color: #000000;
-    line-height: 1;
-  }
-  .kpi-delta-pos { color: #22c55e; font-size: 13px; margin-top: 4px; }
-  .kpi-delta-neg { color: #ef4444; font-size: 13px; margin-top: 4px; }
-
-  /* Section headers */
-  .section-header {
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
-    color: #000000;
-    text-transform: uppercase;
-    border-bottom: 1px solid #c0c0c0;
-    padding-bottom: 8px;
-    margin: 24px 0 16px 0;
-  }
-
-  /* Statement table */
-  .fin-table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  .fin-table th {
-    background: #e8e8e8;
-    color: #000000;
-    font-weight: 700;
-    font-size: 11px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    padding: 10px 14px;
-    text-align: right;
-    border-bottom: 1px solid #c0c0c0;
-  }
-  .fin-table th:first-child { text-align: left; }
-  .fin-table td {
-    padding: 10px 14px;
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: 12px;
-    color: #000000;
-    text-align: right;
-    border-bottom: 1px solid #c0c0c0;
-  }
-  .fin-table td:first-child {
-    font-family: 'IBM Plex Sans', sans-serif;
-    font-size: 13px;
-    text-align: left;
-    color: #000000;
-    padding-left: 8px;
-  }
-  .fin-table tr.total-row td {
-    font-weight: 700;
-    color: #000000;
-    background: #d4d4d4;
-    border-top: 1px solid #c0c0c0;
-  }
-  .fin-table tr.section-row td {
-    font-weight: 700;
-    color: #000000;
-    background: #e8e8e8;
-    font-size: 11px;
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    padding-top: 16px;
-  }
-  .fin-table tr.forecast-col { background: rgba(200, 200, 200, 0.15); }
-  .positive { color: #22c55e !important; }
-  .negative { color: #ef4444 !important; }
 
   /* Sidebar */
   [data-testid="stSidebar"] {
-    background: #d4d4d4;
-    border-right: 1px solid #c0c0c0;
+    background: #ffffff !important;
+    border-right: 1px solid #d8cdb9 !important;
   }
-
-  /* Metric overrides */
-  [data-testid="metric-container"] {
-    background: #e8e8e8;
-    border: 1px solid #c0c0c0;
-    border-radius: 12px;
-    padding: 16px 18px;
+  button[title="Main menu"], button[title="Open main menu"],
+  button[title="Settings"] {
+    display: none !important;
   }
-  div[data-testid="metric-container"] label { color: #000000 !important; }
-
-  .stTabs [data-baseweb="tab"] {
+  .sidebar-logo {
+    font-size: 24px;
+    font-weight: 700;
+    color: #1f2937;
+    padding: 16px 0 8px 0;
+  }
+  .sidebar-subtitle {
+    color: #6b6b6b;
     font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    color: #000000;
+    line-height: 1.6;
+    margin-bottom: 18px;
   }
-  
-  /* Input fields */
-  .stTextInput > div > div > input,
-  .stNumberInput > div > div > input,
-  .stSlider > div > div { color: #000000; }
-  
-  /* Plotly chart container styling */
+  .stRadio > div > label {
+    border-radius: 12px;
+    margin-bottom: 6px;
+    padding: 10px 12px;
+  }
+  .stRadio > div > label:hover {
+    background: rgba(107,143,113,0.12);
+  }
+
+  /* KPI cards */
+  .kpi-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 22px 24px;
+    margin-bottom: 18px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.05);
+  }
+  .kpi-card--sage { border-top: 4px solid #6B8F71; }
+  .kpi-card--terracotta { border-top: 4px solid #C4785A; }
+  .kpi-card--stone { border-top: 4px solid #B5A48A; }
+  .kpi-card--slate { border-top: 4px solid #5C7A9E; }
+  .kpi-label {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    color: #6b6b6b;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+  }
+  .kpi-value {
+    font-size: 28px;
+    font-weight: 600;
+    color: #000000;
+    line-height: 1.1;
+  }
+  .kpi-delta-pos { color: #6B8F71; font-size: 12px; margin-top: 6px; }
+  .kpi-delta-neg { color: #C4785A; font-size: 12px; margin-top: 6px; }
+
+  /* Section headers */
+  .section-header {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: #20232a;
+    text-transform: uppercase;
+    border-bottom: 1px solid #e1d8cd;
+    padding-bottom: 10px;
+    margin: 26px 0 18px 0;
+  }
+
+  .fin-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    color: #20232a;
+  }
+  .fin-table th, .fin-table td {
+    padding: 12px 10px;
+    text-align: left;
+    border-bottom: 1px solid #e5dfd5;
+    white-space: nowrap;
+  }
+  .fin-table th {
+    color: #475569;
+    font-weight: 700;
+  }
+  .fin-table tr.total-row td {
+    font-weight: 700;
+    background: #f9f5ef;
+  }
+  .fin-table tr.section-row td {
+    background: #f2ebe1;
+    color: #475569;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 10px;
+  }
+  .positive { color: #1f6d3b; }
+  .negative { color: #8b1f2b; }
+
+  /* Plotly containers */
   [data-testid="stPlotlyChart"] {
-    border-radius: 16px !important;
+    border-radius: 18px !important;
     overflow: hidden !important;
   }
-  
   .plotly-graph-div {
-    border-radius: 16px !important;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1) !important;
+    border-radius: 18px !important;
   }
-  
-  /* Divider */
-  hr { border-color: #c0c0c0; }
-  
-  /* Headers and text */
-  h1, h2, h3, h4, h5, h6 { color: #000000; }
-  p, span, label { color: #000000; }
+
+  /* Tables */
+  .stDataFrame table {
+    border: none !important;
+    font-size: 13px;
+  }
+  .stDataFrame td, .stDataFrame th {
+    border: none !important;
+    color: #000000 !important;
+  }
+
+  /* Text */
+  h1, h2, h3, h4, h5, h6, p, span, label {
+    color: #000000 !important;
+  }
 </style>
 """, unsafe_allow_html=True)
 
@@ -336,17 +332,17 @@ def color_val(v, fmt_fn=fmt_r):
     return f'<span class="{cls}">{txt}</span>'
 
 COLORS = {
-    "blue"   : "#1e40af",
-    "green"  : "#22c55e",
-    "red"    : "#ef4444",
-    "yellow" : "#eab308",
-    "purple" : "#8b5cf6",
-    "teal"   : "#14b8a6",
-    "bg"     : "#d4d4d4",
-    "bg2"    : "#e8e8e8",
-    "border" : "#c0c0c0",
-    "text"   : "#000000",
-    "muted"  : "#000000",
+    "blue"   : "#2f4f6f",
+    "green"  : "#6b8f71",
+    "red"    : "#a5362a",
+    "yellow" : "#b78a44",
+    "purple" : "#7c5a8a",
+    "teal"   : "#4e7d74",
+    "bg"     : "#f6f1e6",
+    "bg2"    : "#ffffff",
+    "border" : "#d5c8b6",
+    "text"   : "#1f2937",
+    "muted"  : "#4b5563",
 }
 
 PLOT_LAYOUT = dict(
@@ -354,14 +350,14 @@ PLOT_LAYOUT = dict(
     plot_bgcolor=COLORS["bg2"],
     font=dict(family="IBM Plex Sans", color=COLORS["text"], size=12),
     xaxis=dict(gridcolor=COLORS["border"], linecolor=COLORS["border"],
-               tickcolor=COLORS["text"]),
+               tickcolor=COLORS["text"], showgrid=True),
     yaxis=dict(gridcolor=COLORS["border"], linecolor=COLORS["border"],
-               tickcolor=COLORS["text"]),
+               tickcolor=COLORS["text"], showgrid=True),
     legend=dict(bgcolor=COLORS["bg2"], bordercolor=COLORS["border"],
-                borderwidth=1),
-    margin=dict(l=0, r=0, t=48, b=0),
+                borderwidth=1, orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+    margin=dict(l=0, r=0, t=50, b=0),
     hovermode="x unified",
-    title=dict(x=0.5, xanchor="center", font=dict(size=14, color=COLORS["text"], family="IBM Plex Sans")),
+    title=dict(x=0.0, xanchor="left", font=dict(size=14, color=COLORS["text"], family="IBM Plex Sans")),
 )
 
 def apply_layout(fig, **kwargs):
@@ -426,32 +422,43 @@ combined = pd.concat([
 company_name = hist["company"].iloc[0] if "company" in hist.columns else "ML Corp"
 
 # ── Sidebar ───────────────────────────────────────────────────────────────────
+nav_options = [
+    "📈 Overview",
+    "📋 Income Statement",
+    "🏦 Balance Sheet",
+    "💵 Cash Flow",
+    "🎯 DCF Valuation",
+    "⚡ Scenario Engine",
+]
+
 with st.sidebar:
-    st.markdown(f"### 📊 FinModel Pro")
-    st.markdown(f"**{company_name}**")
+    st.markdown('<div class="sidebar-logo">ML Corp</div>', unsafe_allow_html=True)
+    st.markdown('<div class="sidebar-subtitle">Natural financial insight for advisory and investor strategy.</div>', unsafe_allow_html=True)
+    st.divider()
+    selected_tab = st.radio("", nav_options, index=0, label_visibility="collapsed")
     st.divider()
 
-    st.markdown("#### � Scenario analysis")
+    st.markdown("#### Scenario selection")
     st.markdown("Choose the forecast view that highlights strategic upside and downside outcomes.")
-    scenario = st.selectbox("Forecast scenario", ["Base", "Bull", "Bear"], index=0)
+    scenario = st.selectbox("Active scenario", ["Base", "Bull", "Bear"], index=0)
     sc_data = scenarios[scenarios["scenario"] == scenario].sort_values("year")
 
     st.divider()
-    st.markdown("#### 🧮 Valuation assumptions")
+    st.markdown("#### DCF assumptions")
     wacc           = st.slider("Discount rate (WACC %)",           5.0, 25.0, 12.0, 0.5) / 100
     terminal_g     = st.slider("Terminal growth (%)", 0.5,  6.0,  2.5, 0.5) / 100
-    net_debt_m     = st.number_input("Net Debt (R million)", value=5.0, step=0.5)
+    net_debt_m     = st.number_input("Net debt (R million)", value=5.0, step=0.5)
     net_debt       = net_debt_m * 1_000_000
     shares_m       = st.number_input("Shares outstanding (million)", value=10.0, step=1.0)
 
     st.divider()
-    st.markdown("#### 🌍 Macro sensitivity")
+    st.markdown("#### Macro sensitivity")
     st.markdown("Stress test revenue and margin assumptions for a sharper view of downside risk.")
     rev_shock      = st.slider("Revenue impact (%)", -30, +30, 0, 5) / 100
     margin_shock   = st.slider("Margin shift (pp)", -10, +10, 0, 1) / 100
 
     st.divider()
-    st.caption("Built for fast forecast validation, scenario modeling, and investor-ready insight.")
+    st.caption("Built for consulting-grade scenario review and capital planning.")
 
 # ── Apply shocks to scenario ──────────────────────────────────────────────────
 sc_adj = sc_data.copy()
@@ -507,19 +514,14 @@ with k5:
 st.markdown("---")
 
 # ── Tabs ──────────────────────────────────────────────────────────────────────
-tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
-    "📈 Overview",
-    "📋 Income Statement",
-    "🏦 Balance Sheet",
-    "💵 Cash Flow",
-    "🎯 DCF Valuation",
-    "⚡ Scenario Engine",
-])
+# ══════════════════════════════════════════════════════════════════════════════
+# NAVIGATION
+# The sidebar controls which section is shown.
 
 # ══════════════════════════════════════════════════════════════════════════════
 # TAB 1: OVERVIEW
 # ══════════════════════════════════════════════════════════════════════════════
-with tab1:
+if selected_tab == "📈 Overview":
     col_l, col_r = st.columns([3, 2])
 
     with col_l:
@@ -539,7 +541,8 @@ with tab1:
         fig.add_trace(go.Scatter(
             x=monthly["date"], y=monthly["revenue"],
             mode="lines", name="Forecast Revenue",
-            line=dict(color=COLORS["blue"], width=2, dash="dash"),
+            fill="tozeroy", fillcolor="rgba(47,79,111,0.12)",
+            line=dict(color=COLORS["blue"], width=2, dash="dash", shape="spline"),
         ))
 
         # Historical bars
@@ -579,14 +582,14 @@ with tab1:
             fig2.add_trace(go.Scatter(
                 x=all_years[:hist_n], y=[v*100 for v in vals[:hist_n]],
                 mode="lines+markers", name=name,
-                line=dict(color=color, width=2),
+                line=dict(color=color, width=2, shape="spline"),
                 marker=dict(size=6),
             ))
             if len(all_years) > hist_n:
                 fig2.add_trace(go.Scatter(
                     x=all_years[hist_n-1:], y=[v*100 for v in vals[hist_n-1:]],
                     mode="lines+markers", name=f"{name} (F)",
-                    line=dict(color=color, width=2, dash="dot"),
+                    line=dict(color=color, width=2, dash="dot", shape="spline"),
                     marker=dict(size=6, symbol="diamond"),
                     showlegend=False,
                 ))
@@ -641,7 +644,7 @@ with tab1:
 # ══════════════════════════════════════════════════════════════════════════════
 # TAB 2: INCOME STATEMENT
 # ══════════════════════════════════════════════════════════════════════════════
-with tab2:
+elif selected_tab == "📋 Income Statement":
     st.markdown('<div class="section-header">Income Statement — Historical & Forecast</div>',
                 unsafe_allow_html=True)
 
@@ -722,7 +725,7 @@ with tab2:
 # ══════════════════════════════════════════════════════════════════════════════
 # TAB 3: BALANCE SHEET
 # ══════════════════════════════════════════════════════════════════════════════
-with tab3:
+elif selected_tab == "🏦 Balance Sheet":
     st.markdown('<div class="section-header">Balance Sheet</div>', unsafe_allow_html=True)
 
     # Build simplified balance sheet from available data
@@ -808,7 +811,7 @@ with tab3:
 # ══════════════════════════════════════════════════════════════════════════════
 # TAB 4: CASH FLOW
 # ══════════════════════════════════════════════════════════════════════════════
-with tab4:
+elif selected_tab == "💵 Cash Flow":
     st.markdown('<div class="section-header">Cash Flow Statement (Indirect Method)</div>',
                 unsafe_allow_html=True)
 
@@ -890,7 +893,7 @@ with tab4:
 # ══════════════════════════════════════════════════════════════════════════════
 # TAB 5: DCF VALUATION
 # ══════════════════════════════════════════════════════════════════════════════
-with tab5:
+elif selected_tab == "🎯 DCF Valuation":
     st.markdown('<div class="section-header">DCF Valuation Model</div>',
                 unsafe_allow_html=True)
 
@@ -969,7 +972,7 @@ with tab5:
 # ══════════════════════════════════════════════════════════════════════════════
 # TAB 6: SCENARIO ENGINE
 # ══════════════════════════════════════════════════════════════════════════════
-with tab6:
+elif selected_tab == "⚡ Scenario Engine":
     st.markdown('<div class="section-header">Scenario Comparison Engine</div>',
                 unsafe_allow_html=True)
 
