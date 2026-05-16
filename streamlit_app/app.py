@@ -29,15 +29,15 @@ st.markdown("""
 
   html, body, [class*="css"] {
     font-family: 'IBM Plex Sans', sans-serif;
-    background: #ffffff;
-    color: #111827;
+    background: #d4d4d4;
+    color: #000000;
   }
-  .main { background: #ffffff; }
+  .main { background: #d4d4d4; }
 
   /* KPI cards */
   .kpi-card {
-    background: #f8fafc;
-    border: 1px solid #d1d5db;
+    background: #e8e8e8;
+    border: 1px solid #c0c0c0;
     border-radius: 12px;
     padding: 20px 24px;
     margin-bottom: 12px;
@@ -46,7 +46,7 @@ st.markdown("""
     font-size: 11px;
     font-weight: 700;
     letter-spacing: 0.08em;
-    color: #475569;
+    color: #000000;
     text-transform: uppercase;
     margin-bottom: 6px;
   }
@@ -54,20 +54,20 @@ st.markdown("""
     font-family: 'IBM Plex Mono', monospace;
     font-size: 26px;
     font-weight: 600;
-    color: #111827;
+    color: #000000;
     line-height: 1;
   }
-  .kpi-delta-pos { color: #0f766e; font-size: 13px; margin-top: 4px; }
-  .kpi-delta-neg { color: #b91c1c; font-size: 13px; margin-top: 4px; }
+  .kpi-delta-pos { color: #22c55e; font-size: 13px; margin-top: 4px; }
+  .kpi-delta-neg { color: #ef4444; font-size: 13px; margin-top: 4px; }
 
   /* Section headers */
   .section-header {
     font-size: 13px;
     font-weight: 700;
     letter-spacing: 0.08em;
-    color: #334155;
+    color: #000000;
     text-transform: uppercase;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid #c0c0c0;
     padding-bottom: 8px;
     margin: 24px 0 16px 0;
   }
@@ -75,72 +75,84 @@ st.markdown("""
   /* Statement table */
   .fin-table { width: 100%; border-collapse: collapse; font-size: 13px; }
   .fin-table th {
-    background: #f8fafc;
-    color: #334155;
+    background: #e8e8e8;
+    color: #000000;
     font-weight: 700;
     font-size: 11px;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     padding: 10px 14px;
     text-align: right;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid #c0c0c0;
   }
   .fin-table th:first-child { text-align: left; }
   .fin-table td {
     padding: 10px 14px;
     font-family: 'IBM Plex Mono', monospace;
     font-size: 12px;
-    color: #1f2937;
+    color: #000000;
     text-align: right;
-    border-bottom: 1px solid #e2e8f0;
+    border-bottom: 1px solid #c0c0c0;
   }
   .fin-table td:first-child {
     font-family: 'IBM Plex Sans', sans-serif;
     font-size: 13px;
     text-align: left;
-    color: #111827;
+    color: #000000;
     padding-left: 8px;
   }
   .fin-table tr.total-row td {
     font-weight: 700;
-    color: #111827;
-    background: #f1f5f9;
-    border-top: 1px solid #d1d5db;
+    color: #000000;
+    background: #d4d4d4;
+    border-top: 1px solid #c0c0c0;
   }
   .fin-table tr.section-row td {
     font-weight: 700;
-    color: #334155;
-    background: #f8fafc;
+    color: #000000;
+    background: #e8e8e8;
     font-size: 11px;
     letter-spacing: 0.06em;
     text-transform: uppercase;
     padding-top: 16px;
   }
-  .fin-table tr.forecast-col { background: rgba(148, 163, 184, 0.08); }
-  .positive { color: #0f766e !important; }
-  .negative { color: #b91c1c !important; }
+  .fin-table tr.forecast-col { background: rgba(200, 200, 200, 0.15); }
+  .positive { color: #22c55e !important; }
+  .negative { color: #ef4444 !important; }
 
   /* Sidebar */
   [data-testid="stSidebar"] {
-    background: #f8fafc;
-    border-right: 1px solid #e2e8f0;
+    background: #d4d4d4;
+    border-right: 1px solid #c0c0c0;
   }
 
   /* Metric overrides */
   [data-testid="metric-container"] {
-    background: #ffffff;
-    border: 1px solid #d1d5db;
+    background: #e8e8e8;
+    border: 1px solid #c0c0c0;
     border-radius: 12px;
     padding: 16px 18px;
   }
-  div[data-testid="metric-container"] label { color: #475569 !important; }
+  div[data-testid="metric-container"] label { color: #000000 !important; }
 
   .stTabs [data-baseweb="tab"] {
     font-size: 13px;
     font-weight: 600;
     letter-spacing: 0.04em;
-    color: #334155;
+    color: #000000;
   }
+  
+  /* Input fields */
+  .stTextInput > div > div > input,
+  .stNumberInput > div > div > input,
+  .stSlider > div > div { color: #000000; }
+  
+  /* Divider */
+  hr { border-color: #c0c0c0; }
+  
+  /* Headers and text */
+  h1, h2, h3, h4, h5, h6 { color: #000000; }
+  p, span, label { color: #000000; }
 </style>
 """, unsafe_allow_html=True)
 
@@ -309,27 +321,27 @@ def color_val(v, fmt_fn=fmt_r):
     return f'<span class="{cls}">{txt}</span>'
 
 COLORS = {
-    "blue"   : "#2563eb",
-    "green"  : "#0f766e",
-    "red"    : "#b91c1c",
-    "yellow" : "#f59e0b",
-    "purple" : "#7c3aed",
-    "teal"   : "#2dd4bf",
-    "bg"     : "#ffffff",
-    "bg2"    : "#f8fafc",
-    "border" : "#e5e7eb",
-    "text"   : "#111827",
-    "muted"  : "#475569",
+    "blue"   : "#1e40af",
+    "green"  : "#22c55e",
+    "red"    : "#ef4444",
+    "yellow" : "#eab308",
+    "purple" : "#8b5cf6",
+    "teal"   : "#14b8a6",
+    "bg"     : "#d4d4d4",
+    "bg2"    : "#e8e8e8",
+    "border" : "#c0c0c0",
+    "text"   : "#000000",
+    "muted"  : "#000000",
 }
 
 PLOT_LAYOUT = dict(
     paper_bgcolor=COLORS["bg"],
     plot_bgcolor=COLORS["bg2"],
-    font=dict(family="IBM Plex Sans", color=COLORS["muted"], size=12),
+    font=dict(family="IBM Plex Sans", color=COLORS["text"], size=12),
     xaxis=dict(gridcolor=COLORS["border"], linecolor=COLORS["border"],
-               tickcolor=COLORS["muted"]),
+               tickcolor=COLORS["text"]),
     yaxis=dict(gridcolor=COLORS["border"], linecolor=COLORS["border"],
-               tickcolor=COLORS["muted"]),
+               tickcolor=COLORS["text"]),
     legend=dict(bgcolor=COLORS["bg2"], bordercolor=COLORS["border"],
                 borderwidth=1),
     margin=dict(l=0, r=0, t=32, b=0),
@@ -434,14 +446,14 @@ if rev_shock != 0 or margin_shock != 0:
 st.markdown(f"""
 <div style="display:flex; flex-direction:column; gap:10px; margin-bottom:24px;">
   <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
-    <div style="font-size:32px; font-weight:700; color:#111827;">{company_name}</div>
-    <div style="background:#e5e7eb; border:1px solid #d1d5db; border-radius:20px;
-         padding:6px 16px; font-size:13px; font-weight:600; color:#374151;">
+    <div style="font-size:32px; font-weight:700; color:#000000;">{company_name}</div>
+    <div style="background:#e8e8e8; border:1px solid #c0c0c0; border-radius:20px;
+         padding:6px 16px; font-size:13px; font-weight:600; color:#000000;">
       {scenario} Scenario
     </div>
-    {"<div style='background:#f8fafc;border-radius:20px;padding:6px 16px;font-size:13px;font-weight:600;color:#111827;border:1px solid #d1d5db;'>⚡ Shocked</div>" if (rev_shock != 0 or margin_shock != 0) else ""}
+    {"<div style='background:#e8e8e8;border-radius:20px;padding:6px 16px;font-size:13px;font-weight:600;color:#000000;border:1px solid #c0c0c0;'>⚡ Shocked</div>" if (rev_shock != 0 or margin_shock != 0) else ""}
   </div>
-  <div style="color:#4b5563; font-size:16px; max-width:820px; line-height:1.5;">
+  <div style="color:#000000; font-size:16px; max-width:820px; line-height:1.5;">
     Business finance simplified: compare historical performance, scenario-driven forecasts, and valuation sensitivity in one clean, neutral dashboard.
   </div>
 </div>
