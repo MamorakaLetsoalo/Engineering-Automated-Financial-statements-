@@ -332,7 +332,7 @@ def color_val(v, fmt_fn=fmt_r):
     return f'<span class="{cls}">{txt}</span>'
 
 COLORS = {
-    "blue"   : "#2f4f6f",
+    "blue"   : "#000000",
     "green"  : "#6b8f71",
     "red"    : "#a5362a",
     "yellow" : "#b78a44",
