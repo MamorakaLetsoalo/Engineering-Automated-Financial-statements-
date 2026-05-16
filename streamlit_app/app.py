@@ -163,8 +163,11 @@ def load_data():
     fcast = try_csv("annual_forecast")
     scenarios = try_csv("scenarios")
     monthly = try_csv("monthly_forecast")
+    exports_found = all([hist is not None, fcast is not None, scenarios is not None, monthly is not None])
 
-    if hist is None:
+    if exports_found:
+        st.success("✅ Loaded exported CSV data from ./exports/")
+    else:
         # ── Synthetic fallback (runs without Databricks) ──────────────────
         st.info("📂 No exported CSVs found — running with synthetic demo data. "
                 "Run the Databricks notebooks first, then export CSVs to ./exports/")
