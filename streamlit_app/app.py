@@ -212,7 +212,7 @@ def _generate_synthetic():
 
     hist = pd.DataFrame({
         "year": hist_years,
-        "company": "AcmeCorp",
+        "company": "ML Corp",
         "revenue": rev,
         "cogs": rev * (1 - gm),
         "gross_profit": rev * gm,
@@ -250,7 +250,7 @@ def _generate_synthetic():
 
     fcast = pd.DataFrame({
         "year": fcast_years,
-        "company": "AcmeCorp",
+        "company": "ML Corp",
         "revenue": rev_f,
         "cogs": rev_f * (1 - gm_f),
         "gross_profit": rev_f * gm_f,
@@ -357,7 +357,9 @@ PLOT_LAYOUT = dict(
                 borderwidth=1, orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
     margin=dict(l=0, r=0, t=50, b=0),
     hovermode="x unified",
-    title=dict(x=0.0, xanchor="left", font=dict(size=14, color=COLORS["text"], family="IBM Plex Sans")),
+    title_x=0.0,
+    title_xanchor="left",
+    title_font=dict(size=14, color=COLORS["text"], family="IBM Plex Sans"),
 )
 
 def apply_layout(fig, **kwargs):
@@ -435,7 +437,7 @@ with st.sidebar:
     st.markdown('<div class="sidebar-logo">ML Corp</div>', unsafe_allow_html=True)
     st.markdown('<div class="sidebar-subtitle">Natural financial insight for advisory and investor strategy.</div>', unsafe_allow_html=True)
     st.divider()
-    selected_tab = st.radio("", nav_options, index=0, label_visibility="collapsed")
+    selected_tab = st.radio("Navigation", nav_options, index=0, label_visibility="collapsed")
     st.divider()
 
     st.markdown("#### Scenario selection")
@@ -559,7 +561,7 @@ if selected_tab == "📈 Overview":
         apply_layout(fig, title="Revenue — Historical & Forecast",
                      yaxis_tickprefix="R ", yaxis_tickformat=",.0f",
                      height=340)
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width='stretch')
 
     with col_r:
         # Margin progression
@@ -596,7 +598,7 @@ if selected_tab == "📈 Overview":
 
         apply_layout(fig2, title="Margin Progression (%)",
                      yaxis_ticksuffix="%", height=340)
-        st.plotly_chart(fig2, use_container_width=True)
+        st.plotly_chart(fig2, width='stretch')
 
     # Bottom row
     col_a, col_b, col_c = st.columns(3)
@@ -610,7 +612,7 @@ if selected_tab == "📈 Overview":
         ))
         apply_layout(fig3, title="Historical Net Income",
                      yaxis_tickprefix="R ", yaxis_tickformat=",.0f", height=240)
-        st.plotly_chart(fig3, use_container_width=True)
+        st.plotly_chart(fig3, width='stretch')
 
     with col_b:
         # Customers & ARPU
@@ -626,7 +628,7 @@ if selected_tab == "📈 Overview":
                 line=dict(color=COLORS["yellow"], width=2),
             ), secondary_y=True)
             fig4.update_layout(**PLOT_LAYOUT, title="Customers & ARPU", height=240)
-            st.plotly_chart(fig4, use_container_width=True)
+            st.plotly_chart(fig4, width='stretch')
 
     with col_c:
         # FCF
@@ -639,7 +641,7 @@ if selected_tab == "📈 Overview":
         ))
         apply_layout(fig5, title=f"Free Cash Flow ({scenario})",
                      yaxis_tickprefix="R ", yaxis_tickformat=",.0f", height=240)
-        st.plotly_chart(fig5, use_container_width=True)
+        st.plotly_chart(fig5, width='stretch')
 
 # ══════════════════════════════════════════════════════════════════════════════
 # TAB 2: INCOME STATEMENT
@@ -806,7 +808,7 @@ elif selected_tab == "🏦 Balance Sheet":
     ])
     fig_bs.update_layout(**PLOT_LAYOUT, barmode="stack", title="Asset Composition",
                           yaxis_tickprefix="R ", yaxis_tickformat=",.0f", height=300)
-    st.plotly_chart(fig_bs, use_container_width=True)
+    st.plotly_chart(fig_bs, width='stretch')
 
 # ══════════════════════════════════════════════════════════════════════════════
 # TAB 4: CASH FLOW
@@ -814,6 +816,20 @@ elif selected_tab == "🏦 Balance Sheet":
 elif selected_tab == "💵 Cash Flow":
     st.markdown('<div class="section-header">Cash Flow Statement (Indirect Method)</div>',
                 unsafe_allow_html=True)
+
+    bs_data = combined.copy()
+    rev_all = bs_data["revenue"].values
+    ar_col  = "accounts_receivable" if "accounts_receivable" in bs_data.columns else None
+    inv_col = "inventory"           if "inventory" in bs_data.columns else None
+    ap_col  = "accounts_payable"    if "accounts_payable" in bs_data.columns else None
+
+    ar  = bs_data[ar_col].values  if ar_col  else rev_all * 0.12
+    inv = bs_data[inv_col].values if inv_col else rev_all * 0.08
+    ap  = bs_data[ap_col].values  if ap_col else rev_all * 0.06
+    capex_arr = bs_data["capex"].values if "capex" in bs_data.columns else rev_all * 0.05
+    depr_arr  = bs_data["depreciation"].values if "depreciation" in bs_data.columns else rev_all * 0.04
+    init_debt = bs_data["interest_expense"].mean() / 0.07 * 12
+    debt      = np.array([max(init_debt * (0.95 ** i), 0) for i in range(len(bs_data))])
 
     ni    = combined["net_income"].values
     depr  = combined["depreciation"].values if "depreciation" in combined.columns else ni * 0.25
@@ -888,7 +904,7 @@ elif selected_tab == "💵 Cash Flow":
     apply_layout(fig_cf,
                  title=f"Cash Flow Waterfall — {cf_years[-1]}",
                  yaxis_tickprefix="R ", yaxis_tickformat=",.0f", height=320)
-    st.plotly_chart(fig_cf, use_container_width=True)
+    st.plotly_chart(fig_cf, width='stretch')
 
 # ══════════════════════════════════════════════════════════════════════════════
 # TAB 5: DCF VALUATION
@@ -924,7 +940,7 @@ elif selected_tab == "🎯 DCF Valuation":
             totals=dict(marker_color=COLORS["green"]),
         ))
         apply_layout(fig_bridge, yaxis_tickprefix="R ", yaxis_tickformat=",.0f", height=300)
-        st.plotly_chart(fig_bridge, use_container_width=True)
+        st.plotly_chart(fig_bridge, width='stretch')
 
     with c_right:
         st.markdown("**WACC × Terminal Growth Sensitivity (Equity Value)**")
@@ -956,7 +972,7 @@ elif selected_tab == "🎯 DCF Valuation":
                      xaxis_title="Terminal Growth Rate",
                      yaxis_title="WACC",
                      title="Equity Value (R millions)")
-        st.plotly_chart(fig_heat, use_container_width=True)
+        st.plotly_chart(fig_heat, width='stretch')
 
     # FCF discount schedule
     st.markdown("**Discounted FCF Schedule**")
@@ -967,7 +983,7 @@ elif selected_tab == "🎯 DCF Valuation":
         "PV of FCF (R)"   : [fmt_r(f / (1+wacc)**t)
                               for t, f in enumerate(fcf_series, 1)],
     })
-    st.dataframe(schedule, use_container_width=True, hide_index=True)
+    st.dataframe(schedule, width='stretch', hide_index=True)
 
 # ══════════════════════════════════════════════════════════════════════════════
 # TAB 6: SCENARIO ENGINE
@@ -1038,7 +1054,7 @@ elif selected_tab == "⚡ Scenario Engine":
 
     apply_layout(fig_sc, title="Revenue — Scenario Comparison",
                  yaxis_tickprefix="R ", yaxis_tickformat=",.0f", height=380)
-    st.plotly_chart(fig_sc, use_container_width=True)
+    st.plotly_chart(fig_sc, width='stretch')
 
     # Scenario metrics table
     metric_cols = ["year", "revenue", "ebitda", "net_income", "fcf"]
@@ -1054,7 +1070,7 @@ elif selected_tab == "⚡ Scenario Engine":
             "revenue": "Revenue", "ebitda": "EBITDA",
             "net_income": "Net Income", "fcf": "FCF",
         }),
-        use_container_width=True,
+        width='stretch',
         hide_index=True,
     )
 
