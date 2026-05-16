@@ -37,7 +37,7 @@ def _synthetic_hist() -> pd.DataFrame:
     em  = np.linspace(0.17, 0.23, n)
     nm  = np.linspace(0.09, 0.14, n)
     return pd.DataFrame({
-        "year": years, "company": "AcmeCorp",
+        "year": years, "company": "ML Corp",
         "revenue": rev, "cogs": rev*(1-gm),
         "gross_profit": rev*gm,
         "opex": rev*0.20, "rd_expense": rev*0.09, "sga_expense": rev*0.11,
@@ -65,7 +65,7 @@ def _synthetic_forecast() -> pd.DataFrame:
     em    = np.array([0.25, 0.27, 0.29])
     nm    = np.array([0.15, 0.17, 0.19])
     return pd.DataFrame({
-        "year": years, "company": "AcmeCorp", "scenario": "Base",
+        "year": years, "company": "ML Corp", "scenario": "Base",
         "revenue": rev, "cogs": rev*(1-gm), "gross_profit": rev*gm,
         "opex": rev*0.18, "rd_expense": rev*0.09, "sga_expense": rev*0.10,
         "ebitda": rev*em, "depreciation": rev*0.04,

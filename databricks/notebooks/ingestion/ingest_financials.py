@@ -26,7 +26,7 @@ import os
 FRED_API_KEY = os.getenv("FRED_API_KEY", "YOUR_FRED_API_KEY_HERE")
 
 BRONZE_PATH  = "/FileStore/financial_model/bronze"
-COMPANY_NAME = "AcmeCorp"
+COMPANY_NAME = "ML Corp"
 START_DATE   = "2018-01-01"
 END_DATE     = "2023-12-31"
 

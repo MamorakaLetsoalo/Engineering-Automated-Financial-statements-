@@ -16,7 +16,7 @@ from datetime import datetime
 PROJECT = {
     "name"        : "FinModel Pro",
     "version"     : "1.0.0",
-    "company"     : "AcmeCorp",
+    "company"     : "ML Corp",
     "currency"    : "ZAR",
     "fiscal_year_end": "December",
     "environment" : "dev",          # dev | staging | prod

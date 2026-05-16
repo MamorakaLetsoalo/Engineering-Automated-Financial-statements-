@@ -16,8 +16,8 @@ warnings.filterwarnings("ignore")
 
 # ── Page config ───────────────────────────────────────────────────────────────
 st.set_page_config(
-    page_title="FinModel Pro",
-    page_icon="📊",
+    page_title="ML Corp Finance",
+    page_icon="💰",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -53,6 +53,12 @@ st.markdown("""
     font-weight: 700;
     color: #1f2937;
     padding: 16px 0 8px 0;
+  }
+  .sidebar-logo .logo-icon {
+    display: inline-block;
+    margin-right: 8px;
+    font-size: 24px;
+    vertical-align: middle;
   }
   .sidebar-subtitle {
     color: #6b6b6b;
@@ -332,7 +338,7 @@ def color_val(v, fmt_fn=fmt_r):
     return f'<span class="{cls}">{txt}</span>'
 
 COLORS = {
-    "blue"   : "#000000",
+    "blue"   : "#1f77b4",
     "green"  : "#6b8f71",
     "red"    : "#a5362a",
     "yellow" : "#b78a44",
@@ -354,7 +360,7 @@ PLOT_LAYOUT = dict(
     yaxis=dict(gridcolor=COLORS["border"], linecolor=COLORS["border"],
                tickcolor=COLORS["text"], showgrid=True),
     legend=dict(bgcolor=COLORS["bg2"], bordercolor=COLORS["border"],
-                borderwidth=1, orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+                borderwidth=1, font=dict(color="#000000"), orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
     margin=dict(l=0, r=0, t=50, b=0),
     hovermode="x unified",
     title_x=0.0,
@@ -434,7 +440,10 @@ nav_options = [
 ]
 
 with st.sidebar:
-    st.markdown('<div class="sidebar-logo">ML Corp</div>', unsafe_allow_html=True)
+    st.markdown(
+        '<div class="sidebar-logo"><span class="logo-icon">💰</span>ML Corp<span class="logo-icon">💵</span></div>',
+        unsafe_allow_html=True,
+    )
     st.markdown('<div class="sidebar-subtitle">Natural financial insight for advisory and investor strategy.</div>', unsafe_allow_html=True)
     st.divider()
     selected_tab = st.radio("Navigation", nav_options, index=0, label_visibility="collapsed")
